@@ -1,0 +1,6 @@
+codigos_equipos = []
+tipos_equipos = []
+marcas_equipos = []
+modelos_equipos = []
+estados_equipos = []
+legajos_asignados = []
