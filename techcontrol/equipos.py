@@ -1,8 +1,14 @@
-from empleados import legajos_empleados
+from empleados import (
+    legajos_empleados, 
+    registrar_empleado
+)
+
+
 from matriz import (
     TIPOS,
     ESTADOS,
-    actualizar_matriz
+    actualizar_matriz,
+    matriz
 )
 
 codigos_equipos = []
