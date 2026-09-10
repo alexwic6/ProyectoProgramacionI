@@ -22,6 +22,8 @@ legajos_asignados = []
 
 def registrar_equipo(codigo, tipo, marca, modelo):
 
+    tipo = tipo.capitalize()
+
     if codigo == "":
 
         print("Error: el código no puede estar vacío.")
@@ -102,41 +104,6 @@ def buscar_equipo_por_codigo(codigo):
 
     return posicion
 
-#  MOSTRAR INVENTARIO GENERAL
-
-def mostrar_inventario_general():
-
-    if len(codigos_equipos) == 0:
-
-        print("No hay equipos registrados.")
-
-        return
-
-    print("          INVENTARIO GENERAL")
-
-    for i in range(len(codigos_equipos)):
-
-        print()
-
-        print("Equipo", i + 1)
-
-        print("Código:", codigos_equipos[i])
-
-        print("Tipo:", tipos_equipos[i])
-
-        print("Marca:", marcas_equipos[i])
-
-        print("Modelo:", modelos_equipos[i])
-
-        print("Estado:", estados_equipos[i])
-
-        if legajos_asignados[i] == "":
-
-            print("Empleado: Sin empleado asignado")
-
-        else:
-
-            print("Legajo asignado:", legajos_asignados[i])
 
 
 
@@ -214,6 +181,8 @@ def devolver_equipo(codigo):
 #  CAMBIAR ESTADO DE UN EQUIPO
 
 def cambiar_estado_equipo(codigo, estado_nuevo):
+
+    estado_nuevo = estado_nuevo.capitalize()
 
     if codigo not in codigos_equipos:
 
