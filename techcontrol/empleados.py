@@ -19,3 +19,13 @@ def registrar_empleado(legajo, nombre):
 
     legajos_empleados.append(legajo)
     nombres_empleados.append(nombre)
+
+
+
+
+#   FUNCIÓN BUSCAR EMPLEADO POR LEGAJO
+
+def buscar_empleado_por_legajo(legajo_buscado):
+    for i in range(len(legajos_empleados)):
+        if legajos_empleados[i] == legajo_buscado:
+            return i
