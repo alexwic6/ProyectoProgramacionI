@@ -14,9 +14,16 @@ from empleados import (
 
 from matriz import (
     matriz,
+    total_general,
+    total_por_estado,
+    total_por_tipo,
     TIPOS,
     ESTADOS
 )
+
+
+
+
 
 
 
@@ -29,15 +36,6 @@ def contar_por_estado(estado):
 
     return contador
 
-
-def total_general():
-    total = 0
-
-    for fila in matriz:
-        for cantidad in fila:
-            total += cantidad
-
-    return total
 
 
 
@@ -94,7 +92,7 @@ def porcentaje_utilizacion():
     return porcentaje
 
 
-def ranking_empleados():
+def ranking_empleados_utilizacion():
     ranking = []
 
     for i in range(len(legajos_empleados)):
@@ -114,7 +112,7 @@ def ranking_empleados():
 
 
 def top_3_empleados():
-    ranking = ranking_empleados()
+    ranking = ranking_empleados_utilizacion()
 
     return ranking[0:3]
 
@@ -165,15 +163,12 @@ def informe_inventario_general():
 
 
 def informe_matriz_resumen():
-    print("\nMATRIZ RESUMEN")
+    print("\nRESUMEN")
 
     print("Tipo | Disponible | Asignado | En reparación | Fuera de servicio | Total")
 
     for i in range(len(TIPOS)):
-        total_tipo = 0
-
-        for j in range(len(ESTADOS)):
-            total_tipo += matriz[i][j]
+        total_tipo = total_por_tipo(TIPOS[i])
 
         print(
             TIPOS[i],
@@ -189,15 +184,12 @@ def informe_matriz_resumen():
             total_tipo
         )
 
+
+
     print("\nTOTALES POR ESTADO")
 
     for j in range(len(ESTADOS)):
-        total_estado = 0
-
-        for i in range(len(TIPOS)):
-            total_estado += matriz[i][j]
-
-        print(ESTADOS[j], ":", total_estado)
+        print(ESTADOS[j], ":", total_por_estado(ESTADOS[j]))
 
     print("\nTotal general:", total_general())
 
@@ -294,10 +286,10 @@ def informe_equipos_inoperativos():
 
 
 
-def informe_ranking_empleados():
+def informe_ranking_empleados_utilizacion():
     print("\nRANKING DE EMPLEADOS")
 
-    ranking = ranking_empleados()
+    ranking = ranking_empleados_utilizacion()
 
     if len(ranking) == 0:
         print("No hay empleados registrados.")
@@ -326,4 +318,4 @@ def informe_ranking_empleados():
             top[i][1],
             "equipo/s"
         )
-        
+
