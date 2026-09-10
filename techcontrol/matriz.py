@@ -1,7 +1,31 @@
+#   TUPLAS FIJAS
+
+TIPOS = ("Computadora", "Monitor", "Celular")
+ESTADOS = ("Disponible", "Asignado", "En reparación", "Fuera de servicio")
+
+#   MATRIZ (3 filas = TIPOS, 4 columnas = ESTADOS)
+#   Fila 0 = Computadora, Fila 1 = Monitor, Fila 2 = Celular
+#   Columna 0 = Disponible, Columna 1 = Asignado, Columna 2 = En reparación, Columna 3 = Fuera de servicio
+
 filas = 3
 columnas = 4
 
 matriz = [[0 for j in range(columnas)] for i in range(filas)]
 
-TIPOS = ("Computadora", "Monitor", "Celular")
-ESTADOS = ("Disponible", "Asignado", "En reparación", "Fuera de servicio")
+#   ACTUALIZAR MATRIZ
+
+"""
+Recibe el tipo (Computadora, Monitor o Celular), le resta 1 a su estado anterior
+(por si pasa de ser 'Disponible a Asignado') y suma 1 a su estado nuevo
+"""
+
+def actualizar_matriz(tipo, estado_anterior, estado_nuevo):
+    fila = TIPOS.index(tipo)
+
+    if estado_anterior is not None:
+        columna_anterior = ESTADOS.index(estado_anterior)
+        matriz[fila][columna_anterior] -= 1
+
+    columna_nueva = ESTADOS.index(estado_nuevo)
+    matriz[fila][columna_nueva] += 1
+
