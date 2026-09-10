@@ -29,3 +29,11 @@ def actualizar_matriz(tipo, estado_anterior, estado_nuevo):
     columna_nueva = ESTADOS.index(estado_nuevo)
     matriz[fila][columna_nueva] += 1
 
+#   TOTAL POR TIPO
+
+"Obtiene el índice donde se encuentra el 'tipo' recibido de parámetro y suma toda su fila"
+
+def total_por_tipo(tipo):
+    fila = TIPOS.index(tipo)
+    return sum(matriz[fila])
+
