@@ -1,4 +1,9 @@
-from matriz import TIPOS, actualizar_matriz
+from empleados import legajos_empleados
+from matriz import (
+    TIPOS,
+    ESTADOS,
+    actualizar_matriz
+)
 
 codigos_equipos = []
 tipos_equipos = []
@@ -126,3 +131,42 @@ def mostrar_inventario_general():
         else:
 
             print("Legajo asignado:", legajos_asignados[i])
+
+
+
+
+#  ASIGNAR EQUIPO
+
+def asignar_equipo(codigo, legajo):
+
+    if legajo not in legajos_empleados:
+
+        print("Error: no existe un empleado con ese legajo.")
+
+        return
+
+    if codigo not in codigos_equipos:
+
+        print("Error: no existe un equipo con ese código.")
+
+        return
+
+    posicion = codigos_equipos.index(codigo)
+
+    if estados_equipos[posicion] != "Disponible":
+
+        print("Error: el equipo no está Disponible, no se puede asignar.")
+
+        return
+
+    tipo = tipos_equipos[posicion]
+
+    estados_equipos[posicion] = "Asignado"
+
+    legajos_asignados[posicion] = legajo
+
+    actualizar_matriz(tipo, "Disponible", "Asignado")
+
+    print("Equipo asignado correctamente.")
+
+
