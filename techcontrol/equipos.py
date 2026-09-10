@@ -182,7 +182,16 @@ def devolver_equipo(codigo):
 
 def cambiar_estado_equipo(codigo, estado_nuevo):
 
-    estado_nuevo = estado_nuevo.capitalize()
+
+    if estado_nuevo == "1":
+        estado_nuevo = "Disponible"
+    elif estado_nuevo == "2":
+        estado_nuevo = "En reparación"
+    elif estado_nuevo == "3":
+        estado_nuevo = "Fuera de servicio"
+
+    else:
+        estado_nuevo = estado_nuevo.capitalize()
 
     if codigo not in codigos_equipos:
 
