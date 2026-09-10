@@ -205,3 +205,43 @@ def devolver_equipo(codigo):
     print("Equipo devuelto correctamente.")
 
 
+#  CAMBIAR ESTADO DE UN EQUIPO
+
+def cambiar_estado_equipo(codigo, estado_nuevo):
+
+    if codigo not in codigos_equipos:
+
+        print("Error: no existe un equipo con ese código.")
+
+        return
+
+    if estado_nuevo not in ESTADOS:
+
+        print("Error: el estado ingresado no es válido.")
+
+        return
+
+    posicion = codigos_equipos.index(codigo)
+
+    estado_actual = estados_equipos[posicion]
+
+    transiciones_validas = [
+        ("Disponible", "En reparación"),
+        ("En reparación", "Disponible"),
+        ("En reparación", "Fuera de servicio"),
+        ("Disponible", "Fuera de servicio")
+    ]
+
+    if (estado_actual, estado_nuevo) not in transiciones_validas:
+
+        print(f"Error: no se puede pasar de '{estado_actual}' a '{estado_nuevo}'.")
+
+        return
+
+    tipo = tipos_equipos[posicion]
+
+    estados_equipos[posicion] = estado_nuevo
+
+    actualizar_matriz(tipo, estado_actual, estado_nuevo)
+
+    print("Estado del equipo actualizado correctamente.")
