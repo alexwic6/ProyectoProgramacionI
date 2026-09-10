@@ -20,6 +20,11 @@ legajos_asignados = []
 
 #  REGISTRAR EQUIPO
 
+"""
+Recibe los datos de un equipo, verifica que sean válidos y lo agrega
+a las listas con estado 'Disponible'. Luego actualiza la matriz.
+"""
+
 def registrar_equipo(codigo, tipo, marca, modelo):
 
     tipo = tipo.capitalize()
@@ -70,7 +75,13 @@ def registrar_equipo(codigo, tipo, marca, modelo):
 
     print("Equipo registrado correctamente.")
 
+
 #  BUSCAR EQUIPO POR CÓDIGO
+
+"""
+Busca un equipo por su código y, si existe, muestra sus datos.
+También indica si tiene un empleado asignado.
+"""
 
 def buscar_equipo_por_codigo(codigo):
 
@@ -110,6 +121,12 @@ def buscar_equipo_por_codigo(codigo):
 
 #  ASIGNAR EQUIPO
 
+"""
+Busca el equipo y el empleado. Si ambos existen y el equipo está
+disponible, lo asigna al empleado y actualiza la matriz.
+"""
+
+
 def asignar_equipo(codigo, legajo):
 
     if legajo not in legajos_empleados:
@@ -143,7 +160,13 @@ def asignar_equipo(codigo, legajo):
     print("Equipo asignado correctamente.")
 
 
+
 #  DEVOLVER EQUIPO
+
+"""
+Busca el equipo y verifica que esté asignado.
+Luego lo devuelve a 'Disponible' y actualiza la matriz.
+"""
 
 def devolver_equipo(codigo):
 
@@ -178,7 +201,14 @@ def devolver_equipo(codigo):
     print("Equipo devuelto correctamente.")
 
 
+
 #  CAMBIAR ESTADO DE UN EQUIPO
+
+"""
+Verifica que el equipo exista y que el cambio de estado sea válido.
+Luego cambia su estado y actualiza la matriz.
+"""
+
 
 def cambiar_estado_equipo(codigo, estado_nuevo):
 
