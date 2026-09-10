@@ -163,35 +163,24 @@ def informe_inventario_general():
 
 
 def informe_matriz_resumen():
-    print("\nRESUMEN")
+    print("\nMATRIZ RESUMEN")
 
-    print("Tipo | Disponible | Asignado | En reparación | Fuera de servicio | Total")
+    encabezado = f"{'Tipo':<12} | {'Disponible':>10} | {'Asignado':>8} | {'En reparación':>14} | {'Fuera de servicio':>18} | {'Total':>5}"
+    print(encabezado)
+    print("-" * len(encabezado))
 
     for i in range(len(TIPOS)):
         total_tipo = total_por_tipo(TIPOS[i])
 
-        print(
-            TIPOS[i],
-            "|",
-            matriz[i][0],
-            "|",
-            matriz[i][1],
-            "|",
-            matriz[i][2],
-            "|",
-            matriz[i][3],
-            "|",
-            total_tipo
-        )
-
-
+        fila = f"{TIPOS[i]:<12} | {matriz[i][0]:>10} | {matriz[i][1]:>8} | {matriz[i][2]:>14} | {matriz[i][3]:>18} | {total_tipo:>5}"
+        print(fila)
 
     print("\nTOTALES POR ESTADO")
 
     for j in range(len(ESTADOS)):
-        print(ESTADOS[j], ":", total_por_estado(ESTADOS[j]))
+        print(f"{ESTADOS[j]:<20}: {total_por_estado(ESTADOS[j])}")
 
-    print("\nTotal general:", total_general())
+    print(f"\nTotal general: {total_general()}")
 
 
 def informe_equipos_por_empleado(legajo):
@@ -287,7 +276,7 @@ def informe_equipos_inoperativos():
 
 
 def informe_ranking_empleados_utilizacion():
-    print("\nRANKING DE EMPLEADOS")
+    print("\nRANKING DE EMPLEADOS CON MAYOR UTILIZACIÓN DE EQUIPOS")
 
     ranking = ranking_empleados_utilizacion()
 
@@ -305,7 +294,7 @@ def informe_ranking_empleados_utilizacion():
             "equipo/s"
         )
 
-    print("\nTOP 3")
+    print("\nTOP 3 CON MAYOR UTILIZACIÓN")
 
     top = ranking[0:3]
 
