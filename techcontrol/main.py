@@ -66,64 +66,71 @@ def submenu_informes():
         print("Opción inválida.")
 
 
-programa_activo = True
+def iniciar_sistema():
 
-while programa_activo:
+    programa_activo = True
 
-    mostrar_menu()
-    opcion = input("Elegir una opción: ")
+    while programa_activo:
 
-    if opcion == "1":
-        codigo = input("Código: ")
-        tipo = input("Tipo (Computadora/Monitor/Celular): ")
-        marca = input("Marca: ")
-        modelo = input("Modelo: ")
-        registrar_equipo(codigo, tipo, marca, modelo)
+        mostrar_menu()
+        opcion = input("Elegir una opción: ")
 
-    elif opcion == "2":
-        legajo = input("Legajo: ")
-        nombre = input("Nombre completo: ")
-        registrar_empleado(legajo, nombre)
+        if opcion == "1":
+            codigo = input("Código: ")
+            tipo = input("Tipo (Computadora/Monitor/Celular): ")
+            marca = input("Marca: ")
+            modelo = input("Modelo: ")
+            registrar_equipo(codigo, tipo, marca, modelo)
 
-    elif opcion == "3":
-        codigo = input("Código del equipo: ")
-        legajo = input("Legajo del empleado: ")
-        asignar_equipo(codigo, legajo)
+        elif opcion == "2":
+            legajo = input("Legajo: ")
+            nombre = input("Nombre completo: ")
+            registrar_empleado(legajo, nombre)
 
-    elif opcion == "4":
-        codigo = input("Código del equipo a devolver: ")
-        devolver_equipo(codigo)
+        elif opcion == "3":
+            codigo = input("Código del equipo: ")
+            legajo = input("Legajo del empleado: ")
+            asignar_equipo(codigo, legajo)
 
-    elif opcion == "5":
-        codigo = input("Código del equipo: ")
-        print("1. Disponible")
-        print("2. En reparación")
-        print("3. Fuera de servicio")
-        estado_nuevo = input("Elegí el nuevo estado (número o texto): ")
-        cambiar_estado_equipo(codigo, estado_nuevo)
+        elif opcion == "4":
+            codigo = input("Código del equipo a devolver: ")
+            devolver_equipo(codigo)
 
-    elif opcion == "6":
-        codigo = input("Código del equipo a buscar: ")
-        buscar_equipo_por_codigo(codigo)
+        elif opcion == "5":
+            codigo = input("Código del equipo: ")
+            print("1. Disponible")
+            print("2. En reparación")
+            print("3. Fuera de servicio")
+            estado_nuevo = input("Elegí el nuevo estado (número o texto): ")
+            cambiar_estado_equipo(codigo, estado_nuevo)
 
-    elif opcion == "7":
-        legajo = input("Legajo del empleado a buscar: ")
-        posicion = buscar_empleado_por_legajo(legajo)
+        elif opcion == "6":
+            codigo = input("Código del equipo a buscar: ")
+            buscar_equipo_por_codigo(codigo)
 
-        if posicion is None:
-            print("Error: no existe un empleado con ese legajo.")
+        elif opcion == "7":
+            legajo = input("Legajo del empleado a buscar: ")
+            posicion = buscar_empleado_por_legajo(legajo)
+
+            if posicion is None:
+                print("Error: no existe un empleado con ese legajo.")
+            else:
+                informe_equipos_por_empleado(legajo)
+
+        elif opcion == "8":
+            informe_inventario_general()
+
+        elif opcion == "9":
+            submenu_informes()
+
+        elif opcion == "10":
+            print("Cerrando el sistema...")
+            programa_activo = False
+
         else:
-            informe_equipos_por_empleado(legajo)
+            print("Opción inválida, intentá de nuevo.")
 
-    elif opcion == "8":
-        informe_inventario_general()
 
-    elif opcion == "9":
-        submenu_informes()
 
-    elif opcion == "10":
-        print("Cerrando el sistema...")
-        programa_activo = False
-
-    else:
-        print("Opción inválida, intentá de nuevo.")
+if __name__ == "__main__":
+    iniciar_sistema()
