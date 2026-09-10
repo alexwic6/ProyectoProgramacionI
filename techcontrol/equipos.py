@@ -170,3 +170,38 @@ def asignar_equipo(codigo, legajo):
     print("Equipo asignado correctamente.")
 
 
+#  DEVOLVER EQUIPO
+
+def devolver_equipo(codigo):
+
+    if codigo not in codigos_equipos:
+
+        print("Error: no existe un equipo con ese código.")
+
+        return
+
+    posicion = codigos_equipos.index(codigo)
+
+    if estados_equipos[posicion] != "Asignado":
+
+        print("Error: el equipo no está Asignado, no se puede devolver.")
+
+        return
+
+    if legajos_asignados[posicion] == "":
+
+        print("Error: el equipo no tiene un legajo asociado.")
+
+        return
+
+    tipo = tipos_equipos[posicion]
+
+    estados_equipos[posicion] = "Disponible"
+
+    legajos_asignados[posicion] = ""
+
+    actualizar_matriz(tipo, "Asignado", "Disponible")
+
+    print("Equipo devuelto correctamente.")
+
+
