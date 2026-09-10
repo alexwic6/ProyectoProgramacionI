@@ -37,3 +37,20 @@ def total_por_tipo(tipo):
     fila = TIPOS.index(tipo)
     return sum(matriz[fila])
 
+#   OBTENER LA CANTIDAD POR ESTADO
+
+"""
+Obtiene el índice donde se encuentra el estado que se recibe como parámetro e inicializa 'total = 0'.
+Luego recorre cada fila en la matriz y suma a 'total' el valor del elemento de 'fila[columna]'.
+Retorna el total.
+"""
+
+def total_por_estado(estado):
+    columna = ESTADOS.index(estado)
+    total = 0
+
+    for fila in matriz:
+        total += fila[columna]
+
+    return total
+
