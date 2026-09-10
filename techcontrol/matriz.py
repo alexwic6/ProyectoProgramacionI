@@ -54,3 +54,19 @@ def total_por_estado(estado):
 
     return total
 
+#   OBTENER EL TOTAL GENERAL
+
+"""
+Inicia 'total = 0' y recorre cada fila de la matriz.
+Por cada valor de cada elemento en la fila lo suma a 'total'.
+Retorna el total.
+"""
+
+def total_general():
+    total = 0
+
+    for fila in matriz:
+        for cantidad in fila:
+            total += cantidad
+
+    return total
