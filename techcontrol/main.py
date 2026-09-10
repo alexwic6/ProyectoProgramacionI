@@ -32,8 +32,9 @@ def mostrar_menu():
     print("5. Cambiar estado de un equipo")
     print("6. Buscar equipo por código")
     print("7. Buscar empleado y consultar sus equipos")
-    print("8. Generar estadísticas e informes finales")
-    print("9. Salir del sistema")
+    print("8. Mostrar inventario general")
+    print("9. Generar estadísticas e informes finales")
+    print("10. Salir del sistema")
     print("========================================")
 
 
@@ -95,7 +96,10 @@ while programa_activo:
 
     elif opcion == "5":
         codigo = input("Código del equipo: ")
-        estado_nuevo = input("Nuevo estado (Disponible/En reparación/Fuera de servicio): ")
+        print("1. Disponible")
+        print("2. En reparación")
+        print("3. Fuera de servicio")
+        estado_nuevo = input("Elegí el nuevo estado (número o texto): ")
         cambiar_estado_equipo(codigo, estado_nuevo)
 
     elif opcion == "6":
@@ -112,9 +116,12 @@ while programa_activo:
             informe_equipos_por_empleado(legajo)
 
     elif opcion == "8":
-        submenu_informes()
+        informe_inventario_general()
 
     elif opcion == "9":
+        submenu_informes()
+
+    elif opcion == "10":
         print("Cerrando el sistema...")
         programa_activo = False
 
