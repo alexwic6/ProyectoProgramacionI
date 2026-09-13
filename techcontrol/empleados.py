@@ -4,6 +4,9 @@ nombres_empleados = []
 #   FUNCIÓN REGISTRAR EMPLEADO
 
 def registrar_empleado(legajo, nombre):
+
+    legajo = legajo.strip()
+
     if legajo == "" or legajo == None:
         print("El legajo no puede estar vacío.")
         return
@@ -22,6 +25,9 @@ def registrar_empleado(legajo, nombre):
 #   FUNCIÓN BUSCAR EMPLEADO POR LEGAJO
 
 def buscar_empleado_por_legajo(legajo_buscado):
+
+    legajo_buscado = legajo_buscado.strip()
+
     for i in range(len(legajos_empleados)):
         if legajos_empleados[i] == legajo_buscado:
             return i

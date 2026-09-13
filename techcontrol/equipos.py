@@ -27,6 +27,8 @@ a las listas con estado 'Disponible'. Luego actualiza la matriz.
 
 def registrar_equipo(codigo, tipo, marca, modelo):
 
+    codigo = codigo.strip()
+
     tipo = tipo.capitalize()
 
     if codigo == "" or " " in codigo:
@@ -85,6 +87,8 @@ También indica si tiene un empleado asignado.
 
 def buscar_equipo_por_codigo(codigo):
 
+    codigo = codigo.strip()
+
     if codigo not in codigos_equipos:
 
         print("Error: no existe un equipo con ese código.")
@@ -129,6 +133,9 @@ disponible, lo asigna al empleado y actualiza la matriz.
 
 def asignar_equipo(codigo, legajo):
 
+    codigo = codigo.strip()
+    legajo = legajo.strip()
+
     if legajo not in legajos_empleados:
 
         print("Error: no existe un empleado con ese legajo.")
@@ -169,6 +176,8 @@ Luego lo devuelve a 'Disponible' y actualiza la matriz.
 """
 
 def devolver_equipo(codigo):
+
+    codigo = codigo.strip()
 
     if codigo not in codigos_equipos:
 
@@ -212,6 +221,7 @@ Luego cambia su estado y actualiza la matriz.
 
 def cambiar_estado_equipo(codigo, estado_nuevo):
 
+    codigo = codigo.strip()
 
     if estado_nuevo == "1":
         estado_nuevo = "Disponible"
