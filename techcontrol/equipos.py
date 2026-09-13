@@ -29,9 +29,9 @@ def registrar_equipo(codigo, tipo, marca, modelo):
 
     tipo = tipo.capitalize()
 
-    if codigo == "":
+    if codigo == "" or " " in codigo:
 
-        print("Error: el código no puede estar vacío.")
+        print("Error: el código no puede estar vacío ni contener espacios.")
 
         return
 
