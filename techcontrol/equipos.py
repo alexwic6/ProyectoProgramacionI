@@ -141,6 +141,7 @@ def asignar_equipo(codigo, legajo):
 
         return
 
+
     if codigo not in codigos_equipos:
 
         print("Error: no existe un equipo con ese código.")
@@ -149,11 +150,20 @@ def asignar_equipo(codigo, legajo):
 
     posicion = codigos_equipos.index(codigo)
 
+
     if estados_equipos[posicion] != "Disponible":
 
         print("Error: el equipo no está Disponible, no se puede asignar.")
 
         return
+
+
+    if legajos_asignados[posicion] != "":
+
+        print("Error: el equipo ya tiene un legajo asociado.")
+
+        return
+
 
     tipo = tipos_equipos[posicion]
 

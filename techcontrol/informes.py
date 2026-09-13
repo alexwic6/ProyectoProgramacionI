@@ -224,6 +224,10 @@ def informe_indicadores_generales():
 
     print("Porcentaje de utilización:", porcentaje, "%")
 
+    print("\nCantidad de equipos por estado:")
+    for estado in ESTADOS:
+        print(f"{estado}: {contar_por_estado(estado)}")
+
     tipos_maximos, cantidad_tipo = tipo_mas_asignado()
 
     print("\nTipo/s con mayor cantidad de equipos asignados:")
