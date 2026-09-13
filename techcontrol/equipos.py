@@ -1,6 +1,5 @@
 from empleados import (
-    legajos_empleados, 
-    registrar_empleado
+    legajos_empleados
 )
 
 
