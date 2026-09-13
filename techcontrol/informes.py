@@ -40,7 +40,7 @@ def contar_por_estado(estado):
 
 
 def tipo_mas_asignado():
-    columna_asignado = 1
+    columna_asignado = ESTADOS.index("Asignado")
     maximo = -1
     tipos_maximos = []
 
@@ -130,7 +130,7 @@ def equipos_en_reparacion():
 
 def alerta_baja_disponibilidad():
     tipos_baja_disponibilidad = []
-    columna_disponible = 0
+    columna_disponible = ESTADOS.index("Disponible")
 
     for i in range(len(TIPOS)):
         cantidad_disponible = matriz[i][columna_disponible]
