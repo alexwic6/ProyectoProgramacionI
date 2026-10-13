@@ -6,6 +6,7 @@ nombres_empleados = []
 def registrar_empleado(legajo, nombre):
 
     legajo = legajo.strip()
+    nombre = nombre.strip()
 
     if legajo == "" or legajo == None:
         print("El legajo no puede estar vacío.")
