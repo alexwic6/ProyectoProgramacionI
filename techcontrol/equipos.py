@@ -1,3 +1,5 @@
+import re
+
 from empleados import (
     legajos_empleados
 )
@@ -35,6 +37,13 @@ def registrar_equipo(codigo, tipo, marca, modelo):
         print("Error: el código no puede estar vacío ni contener espacios.")
 
         return
+
+    if re.fullmatch(r"[a-zA-Z]{2}-[0-9]{3}", codigo) is None:
+
+        print("El código no cumple con el formato")
+
+        return
+        
 
     if codigo in codigos_equipos:
 

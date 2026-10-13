@@ -76,7 +76,7 @@ def iniciar_sistema():
         opcion = input("Elegir una opción: ")
 
         if opcion == "1":
-            codigo = input("Código: ")
+            codigo = input("Código (FORMATO: XX-000): ")
             tipo = input("Tipo (Computadora/Monitor/Celular): ")
             marca = input("Marca: ")
             modelo = input("Modelo: ")
