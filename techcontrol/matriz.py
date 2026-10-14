@@ -1,4 +1,4 @@
-#   TUPLAS FIJAS
+#   TUPLAS FIJAS (constantes)
 
 TIPOS = ("Computadora", "Monitor", "Celular")
 ESTADOS = ("Disponible", "Asignado", "En reparación", "Fuera de servicio")
@@ -7,19 +7,28 @@ ESTADOS = ("Disponible", "Asignado", "En reparación", "Fuera de servicio")
 #   Fila 0 = Computadora, Fila 1 = Monitor, Fila 2 = Celular
 #   Columna 0 = Disponible, Columna 1 = Asignado, Columna 2 = En reparación, Columna 3 = Fuera de servicio
 
-filas = 3
-columnas = 4
+#   CREAR MATRIZ
 
-matriz = [[0 for j in range(columnas)] for i in range(filas)]
+"""
+Crea y devuelve una matriz de 3 x 4 con todos los valores en 0.
+Se llama una sola vez, desde iniciar_sistema().
+"""
+
+def crear_matriz():
+    filas = len(TIPOS)
+    columnas = len(ESTADOS)
+    matriz = [[0 for j in range(columnas)] for i in range(filas)]
+    return matriz
+
 
 #   ACTUALIZAR MATRIZ
 
 """
-Recibe el tipo (Computadora, Monitor o Celular), le resta 1 a su estado anterior
-(por si pasa de ser 'Disponible a Asignado') y suma 1 a su estado nuevo
+Recibe la matriz, el tipo (Computadora, Monitor o Celular), le resta 1 a su
+estado anterior (por si pasa de ser 'Disponible' a 'Asignado') y suma 1 a su estado nuevo.
 """
 
-def actualizar_matriz(tipo, estado_anterior, estado_nuevo):
+def actualizar_matriz(matriz, tipo, estado_anterior, estado_nuevo):
     fila = TIPOS.index(tipo)
 
     if estado_anterior is not None:
@@ -29,13 +38,15 @@ def actualizar_matriz(tipo, estado_anterior, estado_nuevo):
     columna_nueva = ESTADOS.index(estado_nuevo)
     matriz[fila][columna_nueva] += 1
 
+
 #   TOTAL POR TIPO
 
 "Obtiene el índice donde se encuentra el 'tipo' recibido de parámetro y suma toda su fila"
 
-def total_por_tipo(tipo):
+def total_por_tipo(matriz, tipo):
     fila = TIPOS.index(tipo)
     return sum(matriz[fila])
+
 
 #   OBTENER LA CANTIDAD POR ESTADO
 
@@ -45,7 +56,7 @@ Luego recorre cada fila en la matriz y suma a 'total' el valor del elemento de '
 Retorna el total.
 """
 
-def total_por_estado(estado):
+def total_por_estado(matriz, estado):
     columna = ESTADOS.index(estado)
     total = 0
 
@@ -53,6 +64,7 @@ def total_por_estado(estado):
         total += fila[columna]
 
     return total
+
 
 #   OBTENER EL TOTAL GENERAL
 
@@ -62,7 +74,7 @@ Por cada valor de cada elemento en la fila lo suma a 'total'.
 Retorna el total.
 """
 
-def total_general():
+def total_general(matriz):
     total = 0
 
     for fila in matriz:

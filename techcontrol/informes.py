@@ -1,19 +1,4 @@
-from equipos import (
-    codigos_equipos,
-    tipos_equipos,
-    marcas_equipos,
-    modelos_equipos,
-    estados_equipos,
-    legajos_asignados
-)
-
-from empleados import (
-    legajos_empleados,
-    nombres_empleados
-)
-
 from matriz import (
-    matriz,
     total_general,
     total_por_estado,
     total_por_tipo,
@@ -21,13 +6,10 @@ from matriz import (
     ESTADOS
 )
 
+from empleados import buscar_empleado_por_legajo
 
 
-
-
-
-
-def contar_por_estado(estado):
+def contar_por_estado(estados_equipos, estado):
     contador = 0
 
     for estado_equipo in estados_equipos:
@@ -37,9 +19,7 @@ def contar_por_estado(estado):
     return contador
 
 
-
-
-def tipo_mas_asignado():
+def tipo_mas_asignado(matriz):
     columna_asignado = ESTADOS.index("Asignado")
     maximo = -1
     tipos_maximos = []
@@ -57,7 +37,7 @@ def tipo_mas_asignado():
     return tipos_maximos, maximo
 
 
-def empleado_mas_asignado():
+def empleado_mas_asignado(nombres_empleados, legajos_empleados, legajos_asignados):
     maximo = -1
     empleados_maximos = []
 
@@ -79,10 +59,9 @@ def empleado_mas_asignado():
     return empleados_maximos, maximo
 
 
-
-def porcentaje_utilizacion():
-    total_equipos = total_general()
-    total_asignados = contar_por_estado("Asignado")
+def porcentaje_utilizacion(matriz, estados_equipos):
+    total_equipos = total_general(matriz)
+    total_asignados = contar_por_estado(estados_equipos, "Asignado")
 
     if total_equipos == 0:
         return 0
@@ -92,7 +71,7 @@ def porcentaje_utilizacion():
     return porcentaje
 
 
-def ranking_empleados_utilizacion():
+def ranking_empleados_utilizacion(nombres_empleados, legajos_empleados, legajos_asignados):
     ranking = []
 
     for i in range(len(legajos_empleados)):
@@ -111,13 +90,13 @@ def ranking_empleados_utilizacion():
     return ranking
 
 
-def top_3_empleados():
-    ranking = ranking_empleados_utilizacion()
+def top_3_empleados(nombres_empleados, legajos_empleados, legajos_asignados):
+    ranking = ranking_empleados_utilizacion(nombres_empleados, legajos_empleados, legajos_asignados)
 
     return ranking[0:3]
 
 
-def equipos_en_reparacion():
+def equipos_en_reparacion(codigos_equipos, estados_equipos):
     equipos = [
         codigos_equipos[i]
         for i in range(len(codigos_equipos))
@@ -127,8 +106,7 @@ def equipos_en_reparacion():
     return equipos
 
 
-
-def alerta_baja_disponibilidad():
+def alerta_baja_disponibilidad(matriz):
     tipos_baja_disponibilidad = []
     columna_disponible = ESTADOS.index("Disponible")
 
@@ -141,8 +119,7 @@ def alerta_baja_disponibilidad():
     return tipos_baja_disponibilidad
 
 
-
-def informe_inventario_general():
+def informe_inventario_general(codigos_equipos, tipos_equipos, marcas_equipos, modelos_equipos, estados_equipos, legajos_asignados):
     print("\nINVENTARIO GENERAL DE EQUIPOS")
 
     if len(codigos_equipos) == 0:
@@ -162,7 +139,7 @@ def informe_inventario_general():
             print("Legajo asignado:", legajos_asignados[i])
 
 
-def informe_matriz_resumen():
+def informe_matriz_resumen(matriz):
     print("\nMATRIZ RESUMEN")
 
     encabezado = f"{'Tipo':<12} | {'Disponible':>10} | {'Asignado':>8} | {'En reparación':>14} | {'Fuera de servicio':>18} | {'Total':>5}"
@@ -170,7 +147,7 @@ def informe_matriz_resumen():
     print("-" * len(encabezado))
 
     for i in range(len(TIPOS)):
-        total_tipo = total_por_tipo(TIPOS[i])
+        total_tipo = total_por_tipo(matriz, TIPOS[i])
 
         fila = f"{TIPOS[i]:<12} | {matriz[i][0]:>10} | {matriz[i][1]:>8} | {matriz[i][2]:>14} | {matriz[i][3]:>18} | {total_tipo:>5}"
         print(fila)
@@ -178,23 +155,21 @@ def informe_matriz_resumen():
     print("\nTOTALES POR ESTADO")
 
     for j in range(len(ESTADOS)):
-        print(f"{ESTADOS[j]:<20}: {total_por_estado(ESTADOS[j])}")
+        print(f"{ESTADOS[j]:<20}: {total_por_estado(matriz, ESTADOS[j])}")
 
-    print(f"\nTotal general: {total_general()}")
+    print(f"\nTotal general: {total_general(matriz)}")
 
 
-def informe_equipos_por_empleado(legajo):
-    encontrado = False
+def informe_equipos_por_empleado(legajo, nombres_empleados, legajos_empleados, legajos_asignados, codigos_equipos, tipos_equipos, marcas_equipos, modelos_equipos, estados_equipos):
+    legajo = legajo.strip()
 
-    for i in range(len(legajos_empleados)):
-        if legajos_empleados[i] == legajo:
-            encontrado = True
-            nombre = nombres_empleados[i]
-            break
+    posicion = buscar_empleado_por_legajo(legajos_empleados, legajo)
 
-    if encontrado == False:
+    if posicion is None:
         print("El empleado no existe.")
         return
+
+    nombre = nombres_empleados[posicion]
 
     print("\nEMPLEADO:", nombre)
     print("LEGAJO:", legajo)
@@ -216,19 +191,18 @@ def informe_equipos_por_empleado(legajo):
         print("No tiene equipos asignados.")
 
 
-
-def informe_indicadores_generales():
+def informe_indicadores_generales(matriz, estados_equipos, nombres_empleados, legajos_empleados, legajos_asignados):
     print("\nINDICADORES GENERALES")
 
-    porcentaje = porcentaje_utilizacion()
+    porcentaje = porcentaje_utilizacion(matriz, estados_equipos)
 
     print("Porcentaje de utilización:", porcentaje, "%")
 
     print("\nCantidad de equipos por estado:")
     for estado in ESTADOS:
-        print(f"{estado}: {contar_por_estado(estado)}")
+        print(f"{estado}: {contar_por_estado(estados_equipos, estado)}")
 
-    tipos_maximos, cantidad_tipo = tipo_mas_asignado()
+    tipos_maximos, cantidad_tipo = tipo_mas_asignado(matriz)
 
     print("\nTipo/s con mayor cantidad de equipos asignados:")
 
@@ -237,16 +211,20 @@ def informe_indicadores_generales():
 
     print("Cantidad asignada:", cantidad_tipo)
 
-    empleados_maximos, cantidad_empleado = empleado_mas_asignado()
-
     print("\nEmpleado/s con mayor cantidad de equipos asignados:")
 
-    for empleado in empleados_maximos:
-        print("-", empleado)
+    if len(legajos_empleados) == 0:
+        print("No hay empleados registrados.")
 
-    print("Cantidad de equipos:", cantidad_empleado)
+    else:
+        empleados_maximos, cantidad_empleado = empleado_mas_asignado(nombres_empleados, legajos_empleados, legajos_asignados)
 
-    alertas = alerta_baja_disponibilidad()
+        for empleado in empleados_maximos:
+            print("-", empleado)
+
+        print("Cantidad de equipos:", cantidad_empleado)
+
+    alertas = alerta_baja_disponibilidad(matriz)
 
     print("\nAlertas de baja disponibilidad:")
 
@@ -258,15 +236,33 @@ def informe_indicadores_generales():
             print("-", tipo, "tiene menos de 2 equipos disponibles")
 
 
-
-def informe_equipos_inoperativos():
+def informe_equipos_inoperativos(codigos_equipos, tipos_equipos, marcas_equipos, modelos_equipos, estados_equipos):
     print("\nEQUIPOS EN REPARACIÓN O FUERA DE SERVICIO")
 
-    encontrado = False
+    # Lista obtenida con la comprensión de listas
+    en_reparacion = equipos_en_reparacion(codigos_equipos, estados_equipos)
+
+    print("\n--- EN REPARACIÓN ---")
+
+    if len(en_reparacion) == 0:
+        print("No hay equipos en reparación.")
+
+    for codigo in en_reparacion:
+        i = codigos_equipos.index(codigo)
+
+        print("\nCódigo:", codigos_equipos[i])
+        print("Tipo:", tipos_equipos[i])
+        print("Marca:", marcas_equipos[i])
+        print("Modelo:", modelos_equipos[i])
+        print("Estado:", estados_equipos[i])
+
+    print("\n--- FUERA DE SERVICIO ---")
+
+    hay_fuera_de_servicio = False
 
     for i in range(len(codigos_equipos)):
-        if estados_equipos[i] == "En reparación" or estados_equipos[i] == "Fuera de servicio":
-            encontrado = True
+        if estados_equipos[i] == "Fuera de servicio":
+            hay_fuera_de_servicio = True
 
             print("\nCódigo:", codigos_equipos[i])
             print("Tipo:", tipos_equipos[i])
@@ -274,15 +270,14 @@ def informe_equipos_inoperativos():
             print("Modelo:", modelos_equipos[i])
             print("Estado:", estados_equipos[i])
 
-    if encontrado == False:
-        print("No hay equipos en reparación ni fuera de servicio.")
+    if hay_fuera_de_servicio == False:
+        print("No hay equipos fuera de servicio.")
 
 
-
-def informe_ranking_empleados_utilizacion():
+def informe_ranking_empleados_utilizacion(nombres_empleados, legajos_empleados, legajos_asignados):
     print("\nRANKING DE EMPLEADOS CON MAYOR UTILIZACIÓN DE EQUIPOS")
 
-    ranking = ranking_empleados_utilizacion()
+    ranking = ranking_empleados_utilizacion(nombres_empleados, legajos_empleados, legajos_asignados)
 
     if len(ranking) == 0:
         print("No hay empleados registrados.")
@@ -300,7 +295,7 @@ def informe_ranking_empleados_utilizacion():
 
     print("\nTOP 3 CON MAYOR UTILIZACIÓN")
 
-    top = ranking[0:3]
+    top = top_3_empleados(nombres_empleados, legajos_empleados, legajos_asignados)
 
     for i in range(len(top)):
         print(
@@ -311,4 +306,3 @@ def informe_ranking_empleados_utilizacion():
             top[i][1],
             "equipo/s"
         )
-
