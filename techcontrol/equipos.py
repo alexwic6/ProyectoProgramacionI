@@ -1,23 +1,10 @@
 import re
 
-from empleados import (
-    legajos_empleados
-)
-
-
 from matriz import (
     TIPOS,
     ESTADOS,
-    actualizar_matriz,
-    matriz
+    actualizar_matriz
 )
-
-codigos_equipos = []
-tipos_equipos = []
-marcas_equipos = []
-modelos_equipos = []
-estados_equipos = []
-legajos_asignados = []
 
 #  REGISTRAR EQUIPO
 
@@ -26,62 +13,48 @@ Recibe los datos de un equipo, verifica que sean válidos y lo agrega
 a las listas con estado 'Disponible'. Luego actualiza la matriz.
 """
 
-def registrar_equipo(codigo, tipo, marca, modelo):
+def registrar_equipo(
+        matriz, codigos_equipos, tipos_equipos, marcas_equipos, modelos_equipos,
+        estados_equipos, legajos_asignados,
+        codigo, tipo, marca, modelo):
 
-    codigo = codigo.strip()
-
-    tipo = tipo.capitalize()
+    codigo = codigo.strip().upper()
+    marca = marca.strip()
+    modelo = modelo.strip()
+    tipo = tipo.strip().capitalize()
 
     if codigo == "" or " " in codigo:
-
         print("Error: el código no puede estar vacío ni contener espacios.")
-
         return
 
-    if re.fullmatch(r"[a-zA-Z]{2}-[0-9]{3}", codigo) is None:
-
-        print("El código no cumple con el formato")
-
+    if re.fullmatch(r"[A-Z]{2}-[0-9]{3}", codigo) is None:
+        print("Error: el código no cumple con el formato (ejemplo: EQ-001).")
         return
-        
 
     if codigo in codigos_equipos:
-
         print("Error: ya existe un equipo con ese código.")
-
         return
 
     if tipo not in TIPOS:
-
         print("Error: el tipo de equipo no es válido.")
-
         return
 
     if marca == "":
-
         print("Error: la marca no puede estar vacía.")
-
         return
 
     if modelo == "":
-
         print("Error: el modelo no puede estar vacío.")
-
         return
 
     codigos_equipos.append(codigo)
-
     tipos_equipos.append(tipo)
-
     marcas_equipos.append(marca)
-
     modelos_equipos.append(modelo)
-
     estados_equipos.append("Disponible")
-
     legajos_asignados.append("")
 
-    actualizar_matriz(tipo, None, "Disponible")
+    actualizar_matriz(matriz, tipo, None, "Disponible")
 
     print("Equipo registrado correctamente.")
 
@@ -90,45 +63,38 @@ def registrar_equipo(codigo, tipo, marca, modelo):
 
 """
 Busca un equipo por su código y, si existe, muestra sus datos.
-También indica si tiene un empleado asignado.
+Si tiene un empleado asignado, muestra su legajo y su nombre.
 """
 
-def buscar_equipo_por_codigo(codigo):
+def buscar_equipo_por_codigo(
+        codigos_equipos, tipos_equipos, marcas_equipos, modelos_equipos,
+        estados_equipos, legajos_asignados, legajos_empleados, nombres_empleados,
+        codigo):
 
-    codigo = codigo.strip()
+    codigo = codigo.strip().upper()
 
     if codigo not in codigos_equipos:
-
         print("Error: no existe un equipo con ese código.")
-
         return -1
 
     posicion = codigos_equipos.index(codigo)
 
     print("Equipo encontrado:")
-
     print("Código:", codigo)
-
     print("Tipo:", tipos_equipos[posicion])
-
     print("Marca:", marcas_equipos[posicion])
-
     print("Modelo:", modelos_equipos[posicion])
-
     print("Estado:", estados_equipos[posicion])
 
     if legajos_asignados[posicion] == "":
-
         print("Empleado: Sin empleado asignado")
-
     else:
-
-        print("Legajo asignado:", legajos_asignados[posicion])
+        legajo = legajos_asignados[posicion]
+        posicion_empleado = legajos_empleados.index(legajo)
+        print("Legajo asignado:", legajo)
+        print("Nombre del empleado:", nombres_empleados[posicion_empleado])
 
     return posicion
-
-
-
 
 
 #  ASIGNAR EQUIPO
@@ -138,52 +104,40 @@ Busca el equipo y el empleado. Si ambos existen y el equipo está
 disponible, lo asigna al empleado y actualiza la matriz.
 """
 
+def asignar_equipo(
+        matriz, codigos_equipos, tipos_equipos, estados_equipos,
+        legajos_asignados, legajos_empleados,
+        codigo, legajo):
 
-def asignar_equipo(codigo, legajo):
-
-    codigo = codigo.strip()
+    codigo = codigo.strip().upper()
     legajo = legajo.strip()
 
     if legajo not in legajos_empleados:
-
         print("Error: no existe un empleado con ese legajo.")
-
         return
 
-
     if codigo not in codigos_equipos:
-
         print("Error: no existe un equipo con ese código.")
-
         return
 
     posicion = codigos_equipos.index(codigo)
 
-
     if estados_equipos[posicion] != "Disponible":
-
         print("Error: el equipo no está Disponible, no se puede asignar.")
-
         return
-
 
     if legajos_asignados[posicion] != "":
-
         print("Error: el equipo ya tiene un legajo asociado.")
-
         return
-
 
     tipo = tipos_equipos[posicion]
 
     estados_equipos[posicion] = "Asignado"
-
     legajos_asignados[posicion] = legajo
 
-    actualizar_matriz(tipo, "Disponible", "Asignado")
+    actualizar_matriz(matriz, tipo, "Disponible", "Asignado")
 
     print("Equipo asignado correctamente.")
-
 
 
 #  DEVOLVER EQUIPO
@@ -193,40 +147,35 @@ Busca el equipo y verifica que esté asignado.
 Luego lo devuelve a 'Disponible' y actualiza la matriz.
 """
 
-def devolver_equipo(codigo):
+def devolver_equipo(
+        matriz, codigos_equipos, tipos_equipos, estados_equipos,
+        legajos_asignados,
+        codigo):
 
-    codigo = codigo.strip()
+    codigo = codigo.strip().upper()
 
     if codigo not in codigos_equipos:
-
         print("Error: no existe un equipo con ese código.")
-
         return
 
     posicion = codigos_equipos.index(codigo)
 
     if estados_equipos[posicion] != "Asignado":
-
         print("Error: el equipo no está Asignado, no se puede devolver.")
-
         return
 
     if legajos_asignados[posicion] == "":
-
         print("Error: el equipo no tiene un legajo asociado.")
-
         return
 
     tipo = tipos_equipos[posicion]
 
     estados_equipos[posicion] = "Disponible"
-
     legajos_asignados[posicion] = ""
 
-    actualizar_matriz(tipo, "Asignado", "Disponible")
+    actualizar_matriz(matriz, tipo, "Asignado", "Disponible")
 
     print("Equipo devuelto correctamente.")
-
 
 
 #  CAMBIAR ESTADO DE UN EQUIPO
@@ -236,10 +185,12 @@ Verifica que el equipo exista y que el cambio de estado sea válido.
 Luego cambia su estado y actualiza la matriz.
 """
 
+def cambiar_estado_equipo(
+        matriz, codigos_equipos, tipos_equipos, estados_equipos,
+        codigo, estado_nuevo):
 
-def cambiar_estado_equipo(codigo, estado_nuevo):
-
-    codigo = codigo.strip()
+    codigo = codigo.strip().upper()
+    estado_nuevo = estado_nuevo.strip()
 
     if estado_nuevo == "1":
         estado_nuevo = "Disponible"
@@ -247,20 +198,15 @@ def cambiar_estado_equipo(codigo, estado_nuevo):
         estado_nuevo = "En reparación"
     elif estado_nuevo == "3":
         estado_nuevo = "Fuera de servicio"
-
     else:
         estado_nuevo = estado_nuevo.capitalize()
 
     if codigo not in codigos_equipos:
-
         print("Error: no existe un equipo con ese código.")
-
         return
 
     if estado_nuevo not in ESTADOS:
-
         print("Error: el estado ingresado no es válido.")
-
         return
 
     posicion = codigos_equipos.index(codigo)
@@ -275,15 +221,13 @@ def cambiar_estado_equipo(codigo, estado_nuevo):
     ]
 
     if (estado_actual, estado_nuevo) not in transiciones_validas:
-
         print(f"Error: no se puede pasar de '{estado_actual}' a '{estado_nuevo}'.")
-
         return
 
     tipo = tipos_equipos[posicion]
 
     estados_equipos[posicion] = estado_nuevo
 
-    actualizar_matriz(tipo, estado_actual, estado_nuevo)
+    actualizar_matriz(matriz, tipo, estado_actual, estado_nuevo)
 
     print("Estado del equipo actualizado correctamente.")
