@@ -205,7 +205,7 @@ def informe_indicadores_generales(matriz, estados_equipos, nombres_empleados, le
 
     porcentaje = porcentaje_utilizacion(matriz, estados_equipos)
 
-    print("Porcentaje de utilización:", porcentaje, "%")
+    print(f"Porcentaje de utilización: {porcentaje:.1f} %")
 
     print("\nCantidad de equipos por estado:")
     for estado in ESTADOS:
