@@ -1,0 +1,11 @@
+{
+    "tipos": ["Computadora", "Monitor", "Celular"],
+    "estados": ["Disponible", "Asignado", "En reparación", "Fuera de servicio"],
+    "limite_baja_disponibilidad": 2,
+    "transiciones_permitidas": {
+        "Disponible": ["En reparación", "Fuera de servicio"],
+        "Asignado": [],
+        "En reparación": ["Disponible", "Fuera de servicio"],
+        "Fuera de servicio": []
+    }
+}

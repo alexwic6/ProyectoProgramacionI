@@ -1,0 +1,20 @@
+fecha,codigo_equipo,operacion,estado_anterior,estado_nuevo,legajo
+2026-10-05 09:00:00,EQ-001,alta_equipo,,Disponible,
+2026-10-05 09:02:00,EQ-002,alta_equipo,,Disponible,
+2026-10-05 09:05:00,EQ-003,alta_equipo,,Disponible,
+2026-10-05 09:10:00,EQ-004,alta_equipo,,Disponible,
+2026-10-05 09:12:00,EQ-005,alta_equipo,,Disponible,
+2026-10-05 09:15:00,EQ-006,alta_equipo,,Disponible,
+2026-10-05 09:18:00,EQ-007,alta_equipo,,Disponible,
+2026-10-05 09:20:00,EQ-008,alta_equipo,,Disponible,
+2026-10-05 09:22:00,EQ-009,alta_equipo,,Disponible,
+2026-10-05 09:25:00,EQ-010,alta_equipo,,Disponible,
+2026-10-06 10:00:00,EQ-001,asignacion,Disponible,Asignado,1001
+2026-10-06 10:05:00,EQ-002,asignacion,Disponible,Asignado,1002
+2026-10-06 10:10:00,EQ-004,asignacion,Disponible,Asignado,1001
+2026-10-07 11:00:00,EQ-008,asignacion,Disponible,Asignado,1004
+2026-10-09 15:30:00,EQ-008,devolucion,Asignado,Disponible,1004
+2026-10-12 09:40:00,EQ-008,asignacion,Disponible,Asignado,1003
+2026-10-13 14:00:00,EQ-006,cambio_estado,Disponible,En reparación,
+2026-10-14 10:20:00,EQ-010,cambio_estado,Disponible,En reparación,
+2026-10-16 16:45:00,EQ-010,cambio_estado,En reparación,Fuera de servicio,

@@ -1,0 +1,11 @@
+codigo,tipo,marca,modelo,estado,legajo_asignado
+EQ-001,Computadora,HP,Pavilion 15,Asignado,1001
+EQ-002,Computadora,Lenovo,ThinkPad T14,Asignado,1002
+EQ-003,Computadora,Dell,Latitude 5420,Disponible,
+EQ-004,Monitor,Dell,P2422H,Asignado,1001
+EQ-005,Monitor,LG,24MK430H,Disponible,
+EQ-006,Monitor,Samsung,S24F350,En reparación,
+EQ-007,Monitor,AOC,22B2H,Disponible,
+EQ-008,Celular,Samsung,Galaxy S23,Asignado,1003
+EQ-009,Celular,Motorola,Moto G54,Disponible,
+EQ-010,Celular,Apple,iPhone 13,Fuera de servicio,
